@@ -1,3 +1,8 @@
+# Custom
+.idea/
+.vscode/
+.env
+
 # Logs
 logs
 *.log
