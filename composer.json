@@ -1,0 +1,19 @@
+{
+    "name": "daxdoxsi/abcphp",
+    "description": "Smart PHP Framework",
+    "type": "project",
+    "license": "Apache",
+    "autoload": {
+        "psr-4": {
+            "Daxdoxsi\\Abcphp\\": "core/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David M. Miller",
+            "email": "daxdoxsi@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
