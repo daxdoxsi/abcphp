@@ -1,6 +1,7 @@
 <?php
 
 use Daxdoxsi\Abcphp\Libs\Debug;
+use Daxdoxsi\Abcphp\Libs\Lang;
 use Daxdoxsi\Abcphp\Libs\Router;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -14,7 +15,12 @@ new class {
     {
 
         $routeInfo = Router::matchURIController();
+
+        echo '<h1>'.Lang::t('Hello Mundo').'</h1>';
+
         echo Debug::dump($routeInfo);
+
+
 
     }
 
