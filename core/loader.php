@@ -1,6 +1,7 @@
 <?php
 
 use Daxdoxsi\Abcphp\Libs\Debug;
+use Daxdoxsi\Abcphp\Libs\DB;
 
 require __DIR__.'/../vendor/autoload.php';
 session_start();
@@ -12,7 +13,10 @@ new class {
     public function __construct()
     {
         echo "App loader ready";
-        echo Debug::dump($_SERVER);
+        $db = new DB();
+        $res = $db->query('SELECT * FROM abcphp_routes WHERE 1');
+        echo Debug::dump($res);
+
     }
 
     /**

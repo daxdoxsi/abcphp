@@ -1,6 +1,6 @@
 <?php
 
-namespace Daxdoxsi\Devtool\Library;
+namespace Daxdoxsi\Abcphp\Libs;
 
 use Daxdoxsi\Abcphp\Enum\DirectoriesAppEnum;
 
@@ -9,26 +9,10 @@ class DB
     private \PDO $db;
     private \PDOStatement $res;
     private array $dbCredentials;
-    private bool $ProdEnvironment = false;
-
-    /**
-     * @return bool
-     */
-    public function isProdEnvironment(): bool
-    {
-        return $this->ProdEnvironment;
-    }
-
-    /**
-     * @param bool $ProdEnvironment
-     */
-    public function setProdEnvironment(bool $ProdEnvironment): void
-    {
-        $this->ProdEnvironment = $ProdEnvironment;
-    }
 
     private function getDBConfig():void
     {
+
         # Check for database configuration
         if (!file_exists(DirectoriesAppEnum::DB_CONFIG->value)) {
             die('Please set the database configuration');
@@ -57,7 +41,7 @@ class DB
         # Connecting DB configurations with local variable
         $cnf = $this->dbCredentials;
 
-        $dsn = "{$cnf['driver']}:host={$cnf['host']};port={$cnf['port']};dbname={$cnf['name']}";
+        $dsn = "{$cnf['driver']}:host={$cnf['host']};port={$cnf['port']};dbname={$cnf['dbname']}";
         $this->db = new \PDO($dsn,$cnf['user'],$cnf['pass'],[\PDO::FETCH_ASSOC]);
 
     }
