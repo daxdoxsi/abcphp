@@ -1,8 +1,8 @@
 <?php
 
-namespace Daxdoxsi\Devtool\Library;
+namespace Daxdoxsi\Abcphp\Libs;
 
-use Daxdoxsi\Devtool\Enum\DirEnum;
+use Daxdoxsi\Abcphp\Enum\DirectoriesAppEnum;
 
 class Router
 {
@@ -17,13 +17,23 @@ class Router
         $method = strtolower($_SERVER['REQUEST_METHOD']);
 
         # Reading app and lang parameters from general configuration file
-        $conf = INIReader::getGeneralConfig();
-        $appConf = $conf['application'];
-        $langConf = $conf['language'];
+        $conf = [];
+
+        # Extracting parameters from the DB
+        $db = new DB();
+        $sql = 'SELECT name, value FROM abcphp_params WHERE name = :param1 OR name = :param2';
+        $params = [':param1' => 'langCodeAndLabels', ':param2' => 'langDefault'];
+        $res = $db->query($sql, $params);
+        $res = $res[0];
+
+        # Indexing the app params
+        foreach($res as $record){
+            $conf[$record['name']] = $record['value'];
+        }
 
         # Validating if the language was indicated
-        $langs = explode(',', $langConf['codeLabel']);
-        $langDefault = $langConf['default'];
+        $langs = explode(',', $conf['langCodeAndLabels']);
+        $langDefault = $conf['langDefault'];
 
         # Sorting by language code
         $langCodes = [];
@@ -88,7 +98,9 @@ class Router
         static::$currentUri = $uri;
 
         # Reading the routes configuration
-        $data =  CSVReader::readCSV(DirEnum::CONFIG_ROUTES->value);
+        $res = $db->query('SELECT * FROM abcphp_routes WHERE status = 1');
+        $data = $res[0];
+
 
         # Matching the current URI with the configuration routes
         $located = 0;
@@ -99,7 +111,7 @@ class Router
             # Format the config URI
             $configUri = trim($record['uri'], ' /');
             $configMethod = strtolower($record['request_methods']);
-            $condition = str_contains($configMethod, $method) && $record['status'] == 1;
+            $condition = str_contains($configMethod, $method);
 
             if ($configUri == $uri && $condition) {
 
@@ -122,7 +134,7 @@ class Router
                 # Format the config URI
                 $configUri = trim($record['uri'], ' /');
                 $configMethod = strtolower($record['request_methods']);
-                $condition = str_contains($configMethod, $method) && $record['status'] == 1;
+                $condition = str_contains($configMethod, $method);
 
                 # Regex comparison
                 $configSegments = explode('/',$configUri);
