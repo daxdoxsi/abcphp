@@ -1,5 +1,7 @@
 <?php
 
+use Daxdoxsi\Abcphp\Libs\Debug;
+
 require __DIR__.'/../vendor/autoload.php';
 
 new class {
@@ -9,6 +11,7 @@ new class {
     public function __construct()
     {
         echo "App loader ready";
+        echo Debug::dump($_SERVER);
     }
 
     /**

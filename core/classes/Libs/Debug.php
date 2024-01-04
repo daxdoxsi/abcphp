@@ -14,8 +14,8 @@ class Debug
         foreach($vars as $name => $value){
 
             # Output wrapper
-            $output .= '<div style="padding: 20px; background: bisque; font-family: \'Courier New\';>';
-            $output .= '<h3>'.strtoupper($name).'</h3><hr>';
+            $output .= '<div style="box-shadow: 15px 15px 15px gray; border-radius: 20px; padding: 20px; width:600px; height:400px; overflow: auto; margin: 30px auto; font-size: 0.9em; background: bisque; font-family: \'Courier New\';">';
+            $output .= '<h3>Variable #'.strtoupper($name+1).'</h3><hr>';
 
             # Capturing output
             ob_start();
