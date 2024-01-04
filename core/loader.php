@@ -3,6 +3,7 @@
 use Daxdoxsi\Abcphp\Libs\Debug;
 
 require __DIR__.'/../vendor/autoload.php';
+session_start();
 
 new class {
 
