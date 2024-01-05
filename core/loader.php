@@ -13,14 +13,35 @@ new class {
 
     public function __construct()
     {
+        # Init params
+        $ns = '\\Daxdoxsi\\Abcphp\\MVC\\Controllers\\';
 
         $routeInfo = Router::matchURIController();
 
-        echo '<h1>'.Lang::t('Hello Mundo').'</h1>';
+        if ($routeInfo){
 
-        echo Debug::dump($routeInfo);
+            try {
+                $ctlNS = $ns . $routeInfo['config']['controller'];
+                $ctlMethod = $routeInfo['config']['method'];
+                $controller = (new $ctlNS())->$ctlMethod($routeInfo['config']['params']);
+            }
+            catch (Exception $e) {
+                die($e->getMessage());
+            }
 
+        }
+        else {
 
+            try {
+                $ctlNS = $ns . 'SystemPagesController';
+                $ctlMethod = 'pageNotFound';
+                $controller = (new $ctlNS())->$ctlMethod();
+            }
+            catch (Exception $e) {
+                die($e->getMessage());
+            }
+
+        }
 
     }
 
