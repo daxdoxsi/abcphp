@@ -14,7 +14,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     #[\Override] public function close(): bool
     {
-        $this->mc->quit();
+        return $this->mc->quit();
     }
 
     /**
@@ -22,7 +22,7 @@ class SessionHandler implements \SessionHandlerInterface
      */
     #[\Override] public function destroy(string $id): bool
     {
-        $this->mc->touchByKey($id);
+        return $this->mc->touch($id);
     }
 
     /**
@@ -30,7 +30,8 @@ class SessionHandler implements \SessionHandlerInterface
      */
     #[\Override] public function gc(int $max_lifetime): int|false
     {
-        $this->mc->deleteMulti($this->mc->getAllKeys());
+        $result = $this->mc->deleteMulti($this->mc->getAllKeys());
+        return $this->mc->getResultCode() != Memcached::RES_NOTFOUND;
     }
 
     /**
