@@ -6,7 +6,7 @@ use Daxdoxsi\Abcphp\Libs\Router;
 use Daxdoxsi\Abcphp\Libs\SessionHandler as SessionHandlerAlias;
 
 require __DIR__.'/../vendor/autoload.php';
-session_set_save_handler(new SessionHandlerAlias(), true);
+//session_set_save_handler(new SessionHandlerAlias(), true);
 session_start();
 
 new class {
