@@ -41,11 +41,12 @@ class SessionHandler implements \SessionHandlerInterface
     {
         try {
             $this->mc = new Memcached;
-            $this->mc->addServer('127.0.0.1', '11211');
+            $result = $this->mc->addServer('127.0.0.1', '11211');
         }
         catch (\Exception $e) {
             die('ERROR: '.$e->getMessage());
         }
+        return $result;
     }
 
     /**
